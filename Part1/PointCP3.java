@@ -17,6 +17,8 @@ public class PointCP3 implements PointCP6
    * Contains C(artesian) or P(olar) to identify the type of
    * coordinates that are being dealt with.
    */
+  private PointCP2 myCP2Point;
+	
   private char typeCoord;
   
   /**
@@ -42,8 +44,7 @@ public class PointCP3 implements PointCP6
     if(type != 'C' && type != 'P')
       throw new IllegalArgumentException();
     if(type=='P'){
-	    this.x = Math.cos(Math.toRadians(y)) * x;
-	    this.y = Math.sin(Math.toRadians(y)) * x;
+    	this.myCP2Point = new PointCP2('P',x,y);
     }
     else {
 	    this.x = x;
@@ -68,12 +69,22 @@ public class PointCP3 implements PointCP6
   
   public double getRho()
   {
-      return (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
+	  if(typeCoord=='P') {
+		  return myCP2Point.getRho();
+	  }
+	  else {
+		  return (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
+	  }  
   }
   
   public double getTheta()
   {
-      return Math.toDegrees(Math.atan2(y, x));
+	  if(typeCoord=='P') {
+		  return myCP2Point.getTheta();
+	  }
+	  else {
+		  return Math.toDegrees(Math.atan2(y, x));
+	  }
   }
   
 	
@@ -84,11 +95,7 @@ public class PointCP3 implements PointCP6
   {
     if(typeCoord != 'P')
     {
-      //Calculate RHO and THETA
-      double temp = getRho();
-      y = getTheta();
-      x = temp;
-      
+      myCP2Point = new PointCP2('P',getRho(),getTheta());
       typeCoord = 'P';  //Change coord type identifier
     }
   }
@@ -100,11 +107,6 @@ public class PointCP3 implements PointCP6
   {
     if(typeCoord != 'C')
     {
-      //Calculate X and Y
-      double temp = getX();
-      y = getY();
-      x = temp;
-   
       typeCoord = 'C';	//Change coord type identifier
     }
   }
