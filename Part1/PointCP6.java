@@ -5,8 +5,8 @@ public interface PointCP6 {
 	double getY();
 	double getRho();
 	double getTheta();
-	void convertStorageToPolar();
-	void convertStorageToCartesian();
+	PointCP2 convertStorageToPolar();
+	PointCP3 convertStorageToCartesian();
 	double getDistance(PointCP3 pointB);
 	PointCP3 rotatePoint(double rotation);
 }

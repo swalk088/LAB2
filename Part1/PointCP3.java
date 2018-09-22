@@ -17,9 +17,7 @@ public class PointCP3 implements PointCP6
    * Contains C(artesian) or P(olar) to identify the type of
    * coordinates that are being dealt with.
    */
-  private PointCP2 myCP2Point;
 	
-  private char typeCoord;
   
   /**
    * Contains the current value of X or RHO depending on the type
@@ -44,13 +42,13 @@ public class PointCP3 implements PointCP6
     if(type != 'C' && type != 'P')
       throw new IllegalArgumentException();
     if(type=='P'){
-    	this.myCP2Point = new PointCP2('P',x,y);
+    	this.x = (Math.cos(Math.toRadians(y)) * x);
+	    this.y = (Math.sin(Math.toRadians(y)) * x);
     }
     else {
 	    this.x = x;
 	    this.y = y;
 	   }
-    typeCoord = type;
   }
 	
   
@@ -69,46 +67,29 @@ public class PointCP3 implements PointCP6
   
   public double getRho()
   {
-	  if(typeCoord=='P') {
-		  return myCP2Point.getRho();
-	  }
-	  else {
-		  return (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
-	  }  
+	  return (Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));  
   }
   
   public double getTheta()
   {
-	  if(typeCoord=='P') {
-		  return myCP2Point.getTheta();
-	  }
-	  else {
-		  return Math.toDegrees(Math.atan2(y, x));
-	  }
+	  return Math.toDegrees(Math.atan2(y, x));
   }
   
 	
   /**
    * Converts Cartesian coordinates to Polar coordinates.
    */
-  public void convertStorageToPolar()
+  public PointCP2 convertStorageToPolar()
   {
-    if(typeCoord != 'P')
-    {
-      myCP2Point = new PointCP2('P',getRho(),getTheta());
-      typeCoord = 'P';  //Change coord type identifier
-    }
+	  return new PointCP2('P',getRho(),getTheta());
   }
 	
   /**
    * Converts Polar coordinates to Cartesian coordinates.
    */
-  public void convertStorageToCartesian()
+  public PointCP3 convertStorageToCartesian()
   {
-    if(typeCoord != 'C')
-    {
-      typeCoord = 'C';	//Change coord type identifier
-    }
+    return this;
   }
 
   /**
@@ -155,8 +136,6 @@ public class PointCP3 implements PointCP6
    */
   public String toString()
   {
-    return "Stored as " + (typeCoord == 'C' 
-       ? "Cartesian  (" + getX() + "," + getY() + ")"
-       : "Polar [" + getRho() + "," + getTheta() + "]") + "\n";
+    return "Stored as Cartesian  (" + getX() + "," + getY() + ") \nPolar [" + getRho() + "," + getTheta() + "]" + "\n";
   }
 }

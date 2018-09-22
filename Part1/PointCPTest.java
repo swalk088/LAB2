@@ -68,6 +68,7 @@ public class PointCPTest
     System.out.println("\nAfter asking to store as Cartesian:\n" + point);
     point.convertStorageToPolar();
     System.out.println("\nAfter asking to store as Polar:\n" + point);
+    testing_designs();
   }
 
   /**
@@ -160,4 +161,10 @@ public class PointCPTest
     //Return a new PointCP object
     return (new PointCP(coordType, a, b));
   }
+  private static void testing_designs() {
+	  
+	  
+  }
+  
+  
 }

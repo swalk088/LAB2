@@ -19,9 +19,6 @@ public class PointCP2 implements PointCP6
    * Contains C(artesian) or P(olar) to identify the type of
    * coordinates that are being dealt with.
    */
-  private PointCP3 myCP3Point;
-	
-  private char typeCoord;
   
   /**
    * Contains the current value of RHO 
@@ -44,13 +41,13 @@ public class PointCP2 implements PointCP6
     if(type != 'C' && type != 'P')
       throw new IllegalArgumentException();
     if(type=='C') {
-    	this.myCP3Point = new PointCP3('P',rho,theta);
+    	this.rho = Math.sqrt(Math.pow(rho, 2) + Math.pow(theta, 2));
+	    this.theta = Math.toDegrees(Math.atan2(theta, rho));
     }
     else {
 	    this.rho = rho;
 	    this.theta = theta;
     }
-    typeCoord = type;
   }
 	
   
@@ -59,24 +56,12 @@ public class PointCP2 implements PointCP6
  
   public double getX()
   {
-	  if(typeCoord=='C') {
-		  return myCP3Point.getX();
-	  }
-			
-	  else {
-		  return (Math.cos(Math.toRadians(theta)) * rho);
-	  }
+	  return (Math.cos(Math.toRadians(theta)) * rho);
   }
   
   public double getY()
   {
-	if(typeCoord=='C') {
-		return myCP3Point.getY();
-	}
-		
-	else {
-		return (Math.sin(Math.toRadians(theta)) * rho);
-	}
+	  return (Math.sin(Math.toRadians(theta)) * rho);
   }
   
   public double getRho()
@@ -93,24 +78,17 @@ public class PointCP2 implements PointCP6
   /**
    * Converts Cartesian coordinates to Polar coordinates.
    */
-  public void convertStorageToPolar()
+  public PointCP2 convertStorageToPolar()
   {
-    if(typeCoord != 'P')
-    {      
-      typeCoord = 'P';  //Change coord type identifier
-    }
+    return this;
   }
 	
   /**
    * Converts Polar coordinates to Cartesian coordinates.
    */
-  public void convertStorageToCartesian()
+  public PointCP3 convertStorageToCartesian()
   {
-    if(typeCoord != 'C')
-    {
-      myCP3Point = new PointCP3('P',getX(),getY());
-      typeCoord = 'C';	//Change coord type identifier
-    }
+      return new PointCP3('P',getX(),getY());
   }
 
   /**
@@ -157,8 +135,6 @@ public class PointCP2 implements PointCP6
    */
   public String toString()
   {
-    return "Stored as " + (typeCoord == 'C' 
-       ? "Cartesian  (" + getX() + "," + getY() + ")"
-       : "Polar [" + getRho() + "," + getTheta() + "]") + "\n";
+    return "Stored as Polar [" + getRho() + "," + getTheta() + "]" + "\nCartesian:  (" + getX() + "," + getY() + ")"; 
   }
 }
