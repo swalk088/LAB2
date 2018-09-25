@@ -8,5 +8,5 @@ public interface PointCP6 {
 	PointCP2 convertStorageToPolar();
 	PointCP3 convertStorageToCartesian();
 	double getDistance(PointCP3 pointB);
-	PointCP3 rotatePoint(double rotation);
+	PointCP6 rotatePoint(double rotation);
 }
