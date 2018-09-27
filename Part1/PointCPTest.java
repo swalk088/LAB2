@@ -3,6 +3,7 @@
 // license found at www.lloseng.com 
 
 import java.io.*;
+import java.util.Random;
 
 /**
  * This class prompts the user for a set of coordinates, and then 
@@ -33,7 +34,7 @@ public class PointCPTest
    */
   public static void main(String[] args)
   {
-    PointCP point;
+  /*  PointCP point;
 
     System.out.println("Cartesian-Polar Coordinates Conversion Program");
 
@@ -67,7 +68,7 @@ public class PointCPTest
     point.convertStorageToCartesian();
     System.out.println("\nAfter asking to store as Cartesian:\n" + point);
     point.convertStorageToPolar();
-    System.out.println("\nAfter asking to store as Polar:\n" + point);
+    System.out.println("\nAfter asking to store as Polar:\n" + point);*/
     testing_designs();
   }
 
@@ -162,7 +163,38 @@ public class PointCPTest
     return (new PointCP(coordType, a, b));
   }
   private static void testing_designs() {
-	  
+	  Random rand = new Random();
+	  long startTime = System.nanoTime();
+	  for(int i=0;i<10000;i++) {
+		  PointCP6 myCP=new PointCP2('P',rand.nextInt(100) + 1,rand.nextInt(360) + 1);
+		  myCP.getRho();
+		  myCP.getTheta();
+		  myCP.getX();
+		  myCP.getY();
+		  PointCP3 temp=myCP.convertStorageToCartesian();
+		  myCP.getDistance(temp);
+		  myCP=myCP.convertStorageToPolar();
+		  PointCP6 testPoint=myCP.rotatePoint(78);
+	  }
+	  long stopTime = System.nanoTime();
+	  long elapsedTime = stopTime-startTime;
+	  System.out.println("Test time for PointCP2"+elapsedTime);
+	  startTime = System.nanoTime();
+	  for(int i=0;i<10000;i++) {
+		  PointCP6 myCP=new PointCP3('C',rand.nextInt(100) + 1,rand.nextInt(360) + 1);
+		  myCP.getRho();
+		  myCP.getTheta();
+		  myCP.getX();
+		  myCP.getY();
+		  PointCP2 temp=myCP.convertStorageToPolar();
+		  PointCP3 test=new PointCP3('C',rand.nextInt(100) + 1,rand.nextInt(360) + 1);		  
+		  myCP.getDistance(test);
+		  myCP=myCP.convertStorageToPolar();
+		  PointCP6 testPoint=myCP.rotatePoint(78);
+	  }
+	  stopTime = System.nanoTime();
+	  elapsedTime = stopTime-startTime;
+	  System.out.println("Test time for PointCP3:"+elapsedTime);
 	  
   }
   

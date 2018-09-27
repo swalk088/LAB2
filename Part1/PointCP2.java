@@ -123,7 +123,7 @@ public class PointCP2 implements PointCP6
     double X = getX();
     double Y = getY();
         
-    return new PointCP3('C',
+    return new PointCP2('C',
       (Math.cos(radRotation) * X) - (Math.sin(radRotation) * Y),
       (Math.sin(radRotation) * X) + (Math.cos(radRotation) * Y));
   }
