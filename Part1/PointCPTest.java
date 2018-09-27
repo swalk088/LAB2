@@ -162,8 +162,11 @@ public class PointCPTest
     //Return a new PointCP object
     return (new PointCP(coordType, a, b));
   }
+  /*testing both PointCP2  and PointCP3 
+   classes with the applied PointCP6 interface*/
   private static void testing_designs() {
 	  Random rand = new Random();
+	  /*testing runtime of CP2*/
 	  long startTime = System.nanoTime();
 	  for(int i=0;i<10000;i++) {
 		  PointCP6 myCP=new PointCP2('P',rand.nextInt(100) + 1,rand.nextInt(360) + 1);
@@ -179,6 +182,7 @@ public class PointCPTest
 	  long stopTime = System.nanoTime();
 	  long elapsedTime = stopTime-startTime;
 	  System.out.println("Test time for PointCP2"+elapsedTime);
+	  /*testing runtime of CP3*/
 	  startTime = System.nanoTime();
 	  for(int i=0;i<10000;i++) {
 		  PointCP6 myCP=new PointCP3('C',rand.nextInt(100) + 1,rand.nextInt(360) + 1);
